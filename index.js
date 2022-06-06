@@ -20,7 +20,7 @@ window.onload = function(){
 	var timeout = null;
 
   button.onclick = function(e){
-    var myoController = new MyoWebBluetooth("Myo");
+    var myoController = new MyoWebBluetooth("left_lower_myo");
     myoController.connect();
 
     myoController.onStateChange(function(state){

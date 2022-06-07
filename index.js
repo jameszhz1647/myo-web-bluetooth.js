@@ -1,5 +1,8 @@
 window.onload = function(){
-  let button = document.getElementById("connect");
+  let button_LU = document.getElementById("connect-LU");
+  let button_LL = document.getElementById("connect-LL");
+  let button_RU = document.getElementById("connect-RU");
+  let button_RL = document.getElementById("connect-RL");
   let message = document.getElementById("message");
 
   if ( 'bluetooth' in navigator === false ) {
@@ -19,16 +22,17 @@ window.onload = function(){
 	var initialised = false;
 	var timeout = null;
 
-  button.onclick = function(e){
-    var myoController = new MyoWebBluetooth("left_lower_myo");
+  button_LU.onclick = function(e){
+    var myoController = new MyoWebBluetooth("left_upper_myo");
     myoController.connect();
+    console.log("Device to connect:", myoController.name)
 
     myoController.onStateChange(function(state){
 
       if(state.batteryLevel){
         batteryLevel = state.batteryLevel + '%';
       }
-
+      aimDevice = myoController.name;
       accelerometerData = state.accelerometer;
       gyroscopeData = state.gyroscope;
       poseData = state.pose;
@@ -39,7 +43,7 @@ window.onload = function(){
       myoDirection = state.myoDirection;
       myoLocked = state.myoLocked;
 
-      displayData();
+      displayData('LU');
 
       //***
       // Orientation data coming back from the Myo is very sensitive.
@@ -115,37 +119,40 @@ window.onload = function(){
     renderer.render(scene, camera);
   }
 
-  function displayData(){
+  function displayData(arm){
+    var deviceDiv = document.getElementsByClassName(`device-data-${arm}`)[0];
+    deviceDiv.innerHTML = aimDevice;
+
     if(batteryLevel){
-      var batteryLevelDiv = document.getElementsByClassName('battery-data')[0];
+      var batteryLevelDiv = document.getElementsByClassName(`battery-data-${arm}`)[0];
       batteryLevelDiv.innerHTML = batteryLevel;
     }
 
     if(armType){
-      var armTypeDiv = document.getElementsByClassName('arm-type-data')[0];
+      var armTypeDiv = document.getElementsByClassName(`arm-type-data-${arm}`)[0];
       armTypeDiv.innerHTML = armType;
     }
 
     if(armSynced){
-      var armSyncedDiv = document.getElementsByClassName('arm-synced-data')[0];
+      var armSyncedDiv = document.getElementsByClassName(`arm-synced-data-${arm}`)[0];
       armSyncedDiv.innerHTML = armSynced;
     }
 
     if(myoDirection){
-      var myoDirectionDiv = document.getElementsByClassName('myo-direction-data')[0];
+      var myoDirectionDiv = document.getElementsByClassName(`myo-direction-data-${arm}`)[0];
       myoDirectionDiv.innerHTML = myoDirection;
     }
 
     if(myoLocked){
-      var myoLockedDiv = document.getElementsByClassName('myo-locked-data')[0];
+      var myoLockedDiv = document.getElementsByClassName(`myo-locked-data-${arm}`)[0];
       myoLockedDiv.innerHTML = myoLocked;
     }
 
     if(poseData){
-      var poseDiv = document.getElementsByClassName('pose-data')[0];
+      var poseDiv = document.getElementsByClassName(`pose-data-${arm}`)[0];
       poseDiv.innerHTML = poseData;
 
-      var poseImage = document.getElementsByClassName('pose-image')[0];
+      var poseImage = document.getElementsByClassName(`pose-image-${arm}`)[0];
 
       switch(poseData){
         case 'fist':
@@ -167,35 +174,35 @@ window.onload = function(){
     }
 
     if(orientationData){
-      var orientationXDiv = document.getElementsByClassName('orientation-x-data')[0];
+      var orientationXDiv = document.getElementsByClassName(`orientation-x-data-${arm}`)[0];
       orientationXDiv.innerHTML = orientationData.x;
 
-      var orientationYDiv = document.getElementsByClassName('orientation-y-data')[0];
+      var orientationYDiv = document.getElementsByClassName(`orientation-y-data-${arm}`)[0];
       orientationYDiv.innerHTML = orientationData.y;
 
-      var orientationZDiv = document.getElementsByClassName('orientation-z-data')[0];
+      var orientationZDiv = document.getElementsByClassName(`orientation-z-data-${arm}`)[0];
       orientationZDiv.innerHTML = orientationData.z;
     }
 
     if(accelerometerData){
-      var accelerometerXDiv = document.getElementsByClassName('accelerometer-x-data')[0];
+      var accelerometerXDiv = document.getElementsByClassName(`accelerometer-x-data-${arm}`)[0];
       accelerometerXDiv.innerHTML = accelerometerData.x;
 
-      var accelerometerYDiv = document.getElementsByClassName('accelerometer-y-data')[0];
+      var accelerometerYDiv = document.getElementsByClassName(`accelerometer-y-data-${arm}`)[0];
       accelerometerYDiv.innerHTML = accelerometerData.y;
 
-      var accelerometerZDiv = document.getElementsByClassName('accelerometer-z-data')[0];
+      var accelerometerZDiv = document.getElementsByClassName(`accelerometer-z-data-${arm}`)[0];
       accelerometerZDiv.innerHTML = accelerometerData.z;
     }
 
     if(gyroscopeData){
-      var gyroscopeXDiv = document.getElementsByClassName('gyroscope-x-data')[0];
+      var gyroscopeXDiv = document.getElementsByClassName(`gyroscope-x-data-${arm}`)[0];
       gyroscopeXDiv.innerHTML = gyroscopeData.x;
 
-      var gyroscopeYDiv = document.getElementsByClassName('gyroscope-y-data')[0];
+      var gyroscopeYDiv = document.getElementsByClassName(`gyroscope-y-data-${arm}`)[0];
       gyroscopeYDiv.innerHTML = gyroscopeData.y;
 
-      var gyroscopeZDiv = document.getElementsByClassName('gyroscope-z-data')[0];
+      var gyroscopeZDiv = document.getElementsByClassName(`gyroscope-z-data-${arm}`)[0];
       gyroscopeZDiv.innerHTML = gyroscopeData.z;
     }
   }

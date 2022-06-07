@@ -53,7 +53,7 @@ canvas{
   height: 100% !important;
 }
 
-.myo-data{
+.myo-data-LU{
   display: inline-block;
   width: 45%;
   border: 1px solid black;
@@ -61,7 +61,7 @@ canvas{
   margin-right: 2rem;
 }
 
-.myo-data ul li{
+.myo-data-LU ul li{
   font-size: 14px;
   list-style: none;
   left: 0;
@@ -69,6 +69,6 @@ canvas{
   margin-bottom: 0.5rem;
 }
 
-.myo-data ul{
+.myo-data-LU ul{
   padding-left: 1rem;
 }

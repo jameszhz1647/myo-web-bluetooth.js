@@ -76,7 +76,7 @@ class MyoWebBluetooth{
       optionalServices: [services.classifierService.uuid]
     })
     .then(device => {
-      console.log('Device discovered', device.name);
+      console.log('Device discovered:', device.name);
       return device.gatt.connect();
     })
     .then(server => {

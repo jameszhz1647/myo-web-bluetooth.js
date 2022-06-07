@@ -23,7 +23,11 @@ window.onload = function(){
 	var timeout = null;
 
   button_LU.onclick = function(e){
-    var myoController = new MyoWebBluetooth("left_upper_myo");
+    activateMyo("left_upper_myo", "LU")
+  }
+
+  function activateMyo(device2Connect, arm){
+    var myoController = new MyoWebBluetooth(device2Connect);
     myoController.connect();
     console.log("Device to connect:", myoController.name)
 
@@ -43,7 +47,7 @@ window.onload = function(){
       myoDirection = state.myoDirection;
       myoLocked = state.myoLocked;
 
-      displayData(aimDevice, 'LU');
+      displayData(device2Connect, arm);
 
       //***
       // Orientation data coming back from the Myo is very sensitive.

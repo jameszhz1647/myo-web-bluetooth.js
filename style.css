@@ -53,22 +53,26 @@ canvas{
   height: 100% !important;
 }
 
-.myo-data-LU{
+.myo-data-LU, .myo-data-LL{
   display: inline-block;
   width: 45%;
   border: 1px solid black;
   height: 60%;
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
 }
 
 .myo-data-LU ul li{
-  font-size: 14px;
+  font-size: 12px;
   list-style: none;
   left: 0;
   margin-left: 0;
   margin-bottom: 0.5rem;
 }
 
-.myo-data-LU ul{
-  padding-left: 1rem;
+.myo-data-LL ul li{
+  font-size: 12px;
+  list-style: none;
+  left: 0;
+  margin-left: 0;
+  margin-bottom: 0.5rem;
 }

@@ -43,7 +43,7 @@ window.onload = function(){
       myoDirection = state.myoDirection;
       myoLocked = state.myoLocked;
 
-      displayData('LU');
+      displayData(aimDevice, 'LU');
 
       //***
       // Orientation data coming back from the Myo is very sensitive.
@@ -70,6 +70,31 @@ window.onload = function(){
       //   // mesh.quaternion.copy( quaternionHome );
 			// 	mesh.quaternion.multiply( quaternion );
       // }
+    });
+  }
+
+  button_LL.onclick = function(e){
+    var myoController = new MyoWebBluetooth("Myo");
+    myoController.connect();
+    console.log("Device to connect:", myoController.name)
+
+    myoController.onStateChange(function(state){
+
+      if(state.batteryLevel){
+        batteryLevel = state.batteryLevel + '%';
+      }
+      aimDevice = myoController.name;
+      accelerometerData = state.accelerometer;
+      gyroscopeData = state.gyroscope;
+      poseData = state.pose;
+      emgData = state.emgData;
+      orientationData = state.orientation;
+      armType = state.armType;
+      armSynced = state.armSynced;
+      myoDirection = state.myoDirection;
+      myoLocked = state.myoLocked;
+
+      displayData(aimDevice, 'LL');
     });
   }
 
@@ -119,7 +144,7 @@ window.onload = function(){
     renderer.render(scene, camera);
   }
 
-  function displayData(arm){
+  function displayData(aimDevice, arm){
     var deviceDiv = document.getElementsByClassName(`device-data-${arm}`)[0];
     deviceDiv.innerHTML = aimDevice;
 
@@ -148,30 +173,30 @@ window.onload = function(){
       myoLockedDiv.innerHTML = myoLocked;
     }
 
-    if(poseData){
-      var poseDiv = document.getElementsByClassName(`pose-data-${arm}`)[0];
-      poseDiv.innerHTML = poseData;
+    // if(poseData){
+    //   var poseDiv = document.getElementsByClassName(`pose-data-${arm}`)[0];
+    //   poseDiv.innerHTML = poseData;
 
-      var poseImage = document.getElementsByClassName(`pose-image-${arm}`)[0];
+    //   var poseImage = document.getElementsByClassName(`pose-image-${arm}`)[0];
 
-      switch(poseData){
-        case 'fist':
-          poseImage.src = "images/fist.jpg";
-          break;
-        case 'wave out':
-          poseImage.src = "images/wave-out.jpg";
-          break;
-        case 'wave in':
-          poseImage.src = "images/wave-in.jpg";
-          break;
-        case 'double tap':
-          poseImage.src = "images/double-tap.jpg";
-          break;
-        case 'fingers spread':
-          poseImage.src = "images/fingers-spread.jpg";
-          break;
-      }
-    }
+    //   switch(poseData){
+    //     case 'fist':
+    //       poseImage.src = "images/fist.jpg";
+    //       break;
+    //     case 'wave out':
+    //       poseImage.src = "images/wave-out.jpg";
+    //       break;
+    //     case 'wave in':
+    //       poseImage.src = "images/wave-in.jpg";
+    //       break;
+    //     case 'double tap':
+    //       poseImage.src = "images/double-tap.jpg";
+    //       break;
+    //     case 'fingers spread':
+    //       poseImage.src = "images/fingers-spread.jpg";
+    //       break;
+    //   }
+    // }
 
     if(orientationData){
       var orientationXDiv = document.getElementsByClassName(`orientation-x-data-${arm}`)[0];
